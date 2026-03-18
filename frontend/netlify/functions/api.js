@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import serverless from 'serverless-http';
 import session from 'express-session';
