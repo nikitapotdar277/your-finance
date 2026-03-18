@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import express from 'express';
 import serverless from 'serverless-http';
 import session from 'express-session';
@@ -52,7 +51,7 @@ router.use('/summary', requireAuth, summaryRoutes);
 router.use('/planned-transactions', requireAuth, plannedTransactionRoutes);
 
 // Apply router to the specific Netlify Function endpoint
-app.use('/.netlify/functions/api', router);
+app.use('/api', router); 
 
 // Error Handler
 app.use((err, req, res, next) => {
