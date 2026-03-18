@@ -1,0 +1,13 @@
+[build]
+  # This tells Netlify to enter the frontend folder before running commands
+  base = "frontend"
+  publish = "dist"
+  command = "npm run build"
+  functions = "netlify/functions"
+
+[[redirects]]
+  # This maps your custom URL to the actual serverless function path
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
