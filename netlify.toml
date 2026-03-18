@@ -1,13 +1,14 @@
 [build]
-  # This tells Netlify to enter the frontend folder before running commands
   base = "frontend"
   publish = "dist"
   command = "npm run build"
-  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["bcrypt"] # Optional: helps if bcrypt acts up
 
 [[redirects]]
-  # This maps your custom URL to the actual serverless function path
   from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  to = "/.netlify/functions/api/:splat"
   status = 200
   force = true
