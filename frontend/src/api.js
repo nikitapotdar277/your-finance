@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5001';
+const API_BASE = '';
 
 function normalizeTransaction(t) {
   if (!t) return t;
