@@ -1,0 +1,68 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.app-vertical-nav__list {
+  display: flex;
+  flex-direction: row; 
+  overflow-x: auto;
+  gap: 12px;
+  padding: 10px 0;
+  list-style: none;
+  margin: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-vertical-nav__item {
+  white-space: nowrap;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.app-vertical-nav__brand {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .app-layout {
+    flex-direction: row; 
+    align-items: start;
+  }
+
+  .app-layout__nav {
+    width: 280px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .app-layout__main {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .app-vertical-nav__list {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+
+  .app-vertical-nav__brand {
+    display: flex;
+  }
+}
+
+.table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+@media (max-width: 576px) {
+  .hero__title {
+    font-size: 1.75rem;
+  }
+  .panel-card {
+    padding: 1rem !important;
+  }
+}

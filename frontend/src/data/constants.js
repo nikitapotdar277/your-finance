@@ -18,6 +18,7 @@ export const CATEGORIES = [
   'Gas',
   'Medical',
   'Send Home',
+  'Mandar',
   'Shared Expense',
   'Misc',
   'Paycheck',

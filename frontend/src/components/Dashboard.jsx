@@ -24,6 +24,7 @@ import {
   getNetSpend,
   getPlannedIncome,
   getPlannedExpenses,
+  getCheckingBalance
 } from '../utils/finance';
 
 const PIE_COLORS = ['#4F46E5', '#0F766E', '#DC2626', '#C2410C', '#7C3AED', '#2563EB', '#A16207', '#BE185D'];
@@ -40,6 +41,7 @@ function Dashboard({ transactions, plannedTransactions, monthKey, openingBalance
   const categoryTotals = getCategoryTotals(transactions, monthKey);
   const accountTotals = getAccountSpendTotals(transactions, monthKey);
   const cardSummary = getCardSummary(transactions, monthKey, openingBalances);
+  const checkingBalance = getCheckingBalance(transactions, monthKey)
 
   return (
     <div className="d-flex flex-column gap-4">
@@ -50,6 +52,8 @@ function Dashboard({ transactions, plannedTransactions, monthKey, openingBalance
         <div className="col-md-6 col-xl-4"><SummaryCard title="Net spend" value={netSpend} hint="Spending - reimbursements" tone="primary" /></div>
         <div className="col-md-6 col-xl-4"><SummaryCard title="Card payments" value={cardPayments} hint="Cash flow only, not spending" tone="sky" /></div>
         <div className="col-md-6 col-xl-4"><SummaryCard title="Net inflow" value={netInflow} hint="Income + reimbursements - spending" tone="neutral" /></div>
+        <div className="col-md-6 col-xl-4"><SummaryCard title="Checking Balance" value={checkingBalance} hint="Spending from checking account" tone="neutral" /></div>
+
       </div>
 
       <div className="row g-3">

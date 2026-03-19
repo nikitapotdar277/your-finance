@@ -5,9 +5,10 @@ const NAV_ITEMS = [
   { id: 'transactions', label: 'Transactions' },
   { id: 'planned', label: 'Planned' },
   { id: 'tools', label: 'Tools' },
+  { id: 'logout', label: 'Log Out'},
 ];
 
-function VerticalNav({ selectedSection, onSelectSection }) {
+function VerticalNav({ selectedSection, onSelectSection, onLogout }) {
   return (
     <nav className="app-vertical-nav">
       <div className="app-vertical-nav__brand mb-4">
@@ -23,7 +24,7 @@ function VerticalNav({ selectedSection, onSelectSection }) {
                 'app-vertical-nav__item',
                 selectedSection === item.id && 'app-vertical-nav__item--active',
               )}
-              onClick={() => onSelectSection(item.id)}
+              onClick={selectedSection === 'logout' ? () => onLogout() : () => onSelectSection(item.id)}
             >
               <span className="app-vertical-nav__bullet" />
               <span className="app-vertical-nav__label">{item.label}</span>

@@ -42,6 +42,13 @@ export function filterTransactionsByMonth(transactions, monthKey) {
   return transactions.filter((transaction) => getMonthKey(transaction.date) === monthKey);
 }
 
+export function getCheckingBalance(transactions, monthKey) {
+  const checkingTrasactions = filterTransactionsByMonth(transactions, monthKey).filter((t) => t.fromAccount === "Checking")
+  const checkingIncome = filterTransactionsByMonth(transactions, monthKey).filter((t) => t.toAccount === "Checking")
+  const income = getMonthlyIncome(transactions, monthKey)
+  return (income + checkingIncome) - sumAmounts(checkingTrasactions)
+}
+
 export function getMonthlyIncome(transactions, monthKey) {
   return sumAmounts(
     filterTransactionsByMonth(transactions, monthKey).filter((t) => t.type === 'income'),

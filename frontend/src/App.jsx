@@ -207,7 +207,7 @@ function App() {
         ) : null}
         <div className="app-layout">
           <aside className="app-layout__nav">
-            <VerticalNav selectedSection={selectedSection} onSelectSection={setSelectedSection} />
+            <VerticalNav selectedSection={selectedSection} onSelectSection={setSelectedSection} onLogout={handleLogout} />
           </aside>
 
           <main className="app-layout__main">
@@ -233,12 +233,6 @@ function App() {
                     </option>
                   ))}
                 </select>
-                <button type="button" className="btn btn-outline-secondary mt-2" onClick={clearAllData}>
-                  Reload from server
-                </button>
-                <button type="button" className="btn btn-outline-secondary mt-2 d-block" onClick={handleLogout}>
-                  Log out
-                </button>
                 <button
                   type="button"
                   className="btn btn-outline-primary mt-2 d-block"
