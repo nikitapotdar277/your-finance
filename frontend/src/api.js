@@ -156,3 +156,7 @@ export async function deletePlannedTransaction(id) {
 }
 
 export { normalizeTransaction };
+
+export async function getCategoryGroups() {
+  return request('/api/category-groups');
+}

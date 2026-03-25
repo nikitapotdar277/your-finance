@@ -12,6 +12,7 @@ import {
   logout as apiLogout,
   openingBalancesArrayToByMonth,
   normalizeTransaction,
+  getCategoryGroups
 } from './api';
 import Dashboard from './components/Dashboard';
 import OpeningBalancesForm from './components/OpeningBalancesForm';
@@ -29,6 +30,7 @@ import {
   getPlannedIncome,
   getPlannedExpenses,
 } from './utils/finance';
+import AnalysisPage from './components/AnalysisPage';
 
 function App() {
   const navigate = useNavigate();
@@ -41,18 +43,21 @@ function App() {
   const [error, setError] = useState(null);
   const [showCalculator, setShowCalculator] = useState(false);
   const [selectedSection, setSelectedSection] = useState('overview');
+  const [categoryGroups, setCategoryGroups] = useState([]);
 
   const loadData = useCallback(async () => {
     try {
       setError(null);
-      const [txList, obList, plannedList] = await Promise.all([
+      const [txList, obList, plannedList, categoryGroupList] = await Promise.all([
         getTransactions(),
         getOpeningBalances(),
         getPlannedTransactions(),
+        getCategoryGroups(),
       ]);
       setTransactions(txList);
       setOpeningBalancesByMonth(openingBalancesArrayToByMonth(obList));
       setPlannedTransactions(plannedList);
+      setCategoryGroups(categoryGroupList);
     } catch (e) {
       setError(e.message || 'Failed to load data');
     } finally {
@@ -311,6 +316,13 @@ function App() {
                   />
                 </div>
               </>
+            )}
+
+            {selectedSection === 'analysis' && (
+              <AnalysisPage
+                transactions={transactions}
+                categoryGroups={categoryGroups}
+              />
             )}
 
             {selectedSection === 'tools' && (

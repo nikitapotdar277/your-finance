@@ -14,6 +14,7 @@ import openingBalanceRoutes from './routes/openingBalanceRoutes.js';
 import summaryRoutes from './routes/summaryRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import plannedTransactionRoutes from './routes/plannedTransactionRoutes.js';
+import categoryGroupRoutes from './routes/categoryGroupRoutes.js';
 
 const app = express();
 
@@ -50,6 +51,7 @@ router.use('/transactions', requireAuth, transactionRoutes);
 router.use('/opening-balances', requireAuth, openingBalanceRoutes);
 router.use('/summary', requireAuth, summaryRoutes);
 router.use('/planned-transactions', requireAuth, plannedTransactionRoutes);
+app.use('/api/category-groups', categoryGroupRoutes);
 
 // Apply router to the specific Netlify Function endpoint
 app.use('/api', router); 

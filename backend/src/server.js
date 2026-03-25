@@ -10,6 +10,7 @@ import openingBalanceRoutes from './routes/openingBalanceRoutes.js';
 import summaryRoutes from './routes/summaryRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import plannedTransactionRoutes from './routes/plannedTransactionRoutes.js';
+import categoryGroupRoutes from './routes/categoryGroupRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -45,6 +46,7 @@ app.use('/api/transactions', requireAuth, transactionRoutes);
 app.use('/api/opening-balances', requireAuth, openingBalanceRoutes);
 app.use('/api/summary', requireAuth, summaryRoutes);
 app.use('/api/planned-transactions', requireAuth, plannedTransactionRoutes);
+app.use('/api/category-groups', categoryGroupRoutes);
 
 app.use((err, _req, res, _next) => {
   console.error(err);

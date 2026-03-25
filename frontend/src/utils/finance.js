@@ -166,3 +166,88 @@ export function validateTransaction(form) {
 
   return '';
 }
+
+export function categorizeExpense(transaction, categoryGroups = []) {
+  if (!transaction || !Array.isArray(categoryGroups)) return null;
+
+  const findGroup = (names) =>
+    categoryGroups.find((group) =>
+      names.includes((group.name || '').toLowerCase())
+    );
+
+  const groceriesGroup = findGroup(['groceries']);
+  const needsGroup = findGroup(['needs', 'rent+utilities']);
+  const wantsGroup = findGroup(['wants']);
+  const debtGroup = findGroup(['debt payments']);
+
+  // Ignore every type except expense + card_payment
+  if (!['expense', 'card_payment'].includes(transaction.type)) {
+    return null;
+  }
+
+  // For card payments:
+  // only include the specific debt-payment accounts you want.
+  // all other card payments should be ignored completely.
+  if (transaction.type === 'card_payment') {
+    if (!debtGroup) return null;
+
+    const toAccounts = debtGroup.cardPaymentFilter?.toAccounts || [];
+    const includeCategories = debtGroup.cardPaymentFilter?.includeCategories || [];
+
+    if (
+      toAccounts.includes(transaction.toAccount) ||
+      includeCategories.includes(transaction.category) ||
+      (debtGroup.childCategories || []).includes(transaction.category)
+    ) {
+      return debtGroup.name;
+    }
+
+    return null;
+  }
+
+  // expense -> Groceries
+  if (
+    groceriesGroup &&
+    (groceriesGroup.childCategories || []).includes(transaction.category)
+  ) {
+    return groceriesGroup.name;
+  }
+
+  // expense -> Needs
+  if (
+    needsGroup &&
+    (needsGroup.childCategories || []).includes(transaction.category)
+  ) {
+    return needsGroup.name;
+  }
+
+  // all remaining expenses -> Wants
+  if (wantsGroup) {
+    return wantsGroup.name;
+  }
+
+  return null;
+}
+
+export function getExpenseGroupTotals(transactions, monthKey, categoryGroups = []) {
+  const totals = {};
+
+  filterTransactionsByMonth(transactions, monthKey)
+    .filter((t) => ['expense', 'card_payment'].includes(t.type))
+    .forEach((transaction) => {
+      const groupName = categorizeExpense(transaction, categoryGroups);
+      if (!groupName) return;
+
+      totals[groupName] = (totals[groupName] || 0) + Number(transaction.amount || 0);
+    });
+
+  const colorMap = ['#4F46E5', '#0F766E', '#DC2626', '#C2410C'];
+
+  return Object.entries(totals)
+    .map(([name, value], index) => ({
+      name,
+      value,
+      color: colorMap[index % colorMap.length],
+    }))
+    .sort((a, b) => b.value - a.value);
+}
