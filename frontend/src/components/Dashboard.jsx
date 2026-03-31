@@ -24,7 +24,8 @@ import {
   getNetSpend,
   getPlannedIncome,
   getPlannedExpenses,
-  getCheckingBalance
+  getCheckingBalance,
+  getExpenseGroupTotals
 } from '../utils/finance';
 
 const PIE_COLORS = ['#4F46E5', '#0F766E', '#DC2626', '#C2410C', '#7C3AED', '#2563EB', '#A16207', '#BE185D'];
@@ -41,7 +42,8 @@ function Dashboard({ transactions, plannedTransactions, monthKey, openingBalance
   const categoryTotals = getCategoryTotals(transactions, monthKey);
   const accountTotals = getAccountSpendTotals(transactions, monthKey);
   const cardSummary = getCardSummary(transactions, monthKey, openingBalances);
-  const checkingBalance = getCheckingBalance(transactions, monthKey)
+  const checkingBalance = getCheckingBalance(transactions, monthKey);
+  const expenseGroupTotals = getExpenseGroupTotals(transactions, monthKey, categoryGroups);
 
   return (
     <div className="d-flex flex-column gap-4">
@@ -74,6 +76,45 @@ function Dashboard({ transactions, plannedTransactions, monthKey, openingBalance
           </div>
         </div>
       </div>
+
+      <div className="row g-4 mb-4">
+  <div className="col-xl-6">
+    <div className="panel-card h-100">
+      <div className="panel-card__header">
+        <div>
+          <h2 className="panel-card__title">Spending by category group</h2>
+          <p className="panel-card__subtitle">Needs, Wants, and Debt breakdown.</p>
+        </div>
+      </div>
+
+      {expenseGroupTotals.length ? (
+        <div className="chart-wrap">
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie data={expenseGroupTotals} dataKey="value" nameKey="name" innerRadius={70} outerRadius={100} paddingAngle={3}>
+                {expenseGroupTotals.map((entry, index) => (
+                  <Cell key={entry.name} fill={entry.color || PIE_COLORS[index % PIE_COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip formatter={(value) => formatCurrency(value)} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      ) : (
+        <div className="empty-state">No category group data yet for this month.</div>
+      )}
+
+      <div className="legend-list mt-3">
+        {expenseGroupTotals.map((item) => (
+          <div className="legend-list__row" key={item.name}>
+            <span>{item.name}</span>
+            <strong>{formatCurrency(item.value)}</strong>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
 
       <div className="row g-4">
         <div className="col-xl-6">
