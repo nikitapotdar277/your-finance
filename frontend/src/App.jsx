@@ -266,6 +266,7 @@ function App() {
                 plannedTransactions={plannedTransactions}
                 monthKey={selectedMonth}
                 openingBalances={openingBalances}
+                categoryGroups={categoryGroups}
               />
             )}
 
