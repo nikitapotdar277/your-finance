@@ -30,7 +30,7 @@ import {
 
 const PIE_COLORS = ['#4F46E5', '#0F766E', '#DC2626', '#C2410C', '#7C3AED', '#2563EB', '#A16207', '#BE185D'];
 
-function Dashboard({ transactions, plannedTransactions, monthKey, openingBalances }) {
+function Dashboard({ transactions, plannedTransactions, monthKey, openingBalances, categoryGroups }) {
   const income = getMonthlyIncome(transactions, monthKey);
   const spending = getMonthlySpending(transactions, monthKey);
   const reimbursements = getMonthlyReimbursements(transactions, monthKey);
