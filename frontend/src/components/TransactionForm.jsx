@@ -63,10 +63,6 @@ function TransactionForm({ onAddTransaction }) {
 
     onAddTransaction(form);
     setError('');
-    setForm({
-      ...DEFAULT_FORM,
-      date: form.date,
-    });
   }
 
   return (
