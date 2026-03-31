@@ -65,6 +65,7 @@ function TransactionForm({ onAddTransaction }) {
     setError('');
     setForm({
       ...DEFAULT_FORM,
+      category: form.category,
       fromAccount: form.fromAccount,
       date: form.date,
     });
