@@ -63,6 +63,11 @@ function TransactionForm({ onAddTransaction }) {
 
     onAddTransaction(form);
     setError('');
+    setForm({
+      ...DEFAULT_FORM,
+      fromAccount: form.fromAccount,
+      date: form.date,
+    });
   }
 
   return (
