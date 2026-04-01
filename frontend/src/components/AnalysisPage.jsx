@@ -1,6 +1,20 @@
 import ExpenseBreakdown from './ExpenseBreakdown';
 
 function AnalysisPage({ transactions, categoryGroups }) {
+  const needsCategories = useMemo(() => {
+    const needsGroup = categoryGroups.find((g) =>
+      ['needs', 'rent+utilities'].includes((g.name || '').toLowerCase())
+    );
+    return needsGroup?.childCategories || [];
+  }, [categoryGroups]);
+
+  const wantsCategories = useMemo(() => {
+    const wantsGroup = categoryGroups.find((g) =>
+      ['wants'].includes((g.name || '').toLowerCase())
+    );
+    return wantsGroup?.childCategories || [];
+  }, [categoryGroups]);
+
   return (
     <div className="row g-4 mt-1">
       <div className="col-12">
@@ -9,7 +23,7 @@ function AnalysisPage({ transactions, categoryGroups }) {
             <div>
               <h2 className="panel-card__title">Category Groups Reference</h2>
               <p className="panel-card__subtitle">
-                Categories and Sub Categories
+                Which categories fall under Needs and Wants
               </p>
             </div>
           </div>
@@ -50,9 +64,7 @@ function AnalysisPage({ transactions, categoryGroups }) {
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="row g-4 mt-1">
       <div className="col-12">
         <div className="panel-card">
           <div className="panel-card__header">
