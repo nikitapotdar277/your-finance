@@ -111,6 +111,9 @@ function App() {
           [monthKey]: { ...DEFAULT_OPENING_BALANCES },
         }));
       }
+      if (selectedMonth !== monthKey) {
+        setSelectedMonth(monthKey);
+      }
     } catch (e) {
       setError(e.message || 'Failed to add transaction');
     }
