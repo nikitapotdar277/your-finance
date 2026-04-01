@@ -50,6 +50,7 @@ function AnalysisPage({ transactions, categoryGroups }) {
           </div>
         </div>
       </div>
+    </div>
 
     <div className="row g-4 mt-1">
       <div className="col-12">
