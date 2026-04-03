@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import ExpenseBreakdown from './ExpenseBreakdown';
 
 function AnalysisPage({ transactions, categoryGroups }) {
